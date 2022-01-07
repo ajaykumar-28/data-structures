@@ -1,0 +1,159 @@
+#include<stdio.h>
+#include<stdlib.h>
+int hash(int value)
+{ 
+	return value%10;
+}
+void insert(int arr[10],int value) 
+{
+	int key = hash(value); 
+	int flag=0,j;
+ 	if(arr[key] == -1)
+ 	{
+		arr[key] = value;
+ 		printf("%d inserted at arr[%d]\n", value,key);
+		 flag=1; 
+	} 
+	else
+ 	{
+		printf("Collision : arr[%d] has element %d already!\n",key,arr[key]); 
+		for(j=key+1;j<10;j++) 
+		{
+			 if(arr[j]==-1)
+ 			{
+				 arr[j]=value;
+ 				flag=1; 
+				break;
+			 } 
+		} 
+		for(j=0;j<key&&flag==0;j++) 
+		{
+ 			if(arr[j]==-1)
+ 			{
+ 				arr[j]=value;
+				 flag=1;
+				 break; 
+			}
+		 }
+ 	}
+ 	if(flag==0) 
+	{ 
+		printf("Unable to insert %d\n",value);
+ 	}
+ }
+ void del(int arr[10],int value) 
+{
+ 	int key = hash(value);
+ 	int flag=0,j;
+ 	if(arr[key] == value) 
+	{ 
+		arr[key] = -1;
+		 flag=1;
+ 	} 
+	else
+	{ 
+		for(j=key+1;j<10;j++)
+ 		{ 
+			if(arr[j]==value)
+	 		{
+ 				arr[j]=-1;
+ 				flag=1;
+ 				break; 
+			}
+		 } 
+		for(j=0;j<key&&flag==0;j++) 
+		{
+ 			if(arr[j]==value)
+ 			{ 
+				arr[j]=-1;
+ 				flag=1;
+				break;
+ 			}
+		 } 
+	}
+ 	if(flag==1)
+ 	{
+		 printf("Element %d Found to delete\n",value);
+ 	}
+	 else 
+	{
+ 		printf("Element %d not Found to delete\n",value);
+	}
+ } 
+void search(int arr[10],int value)
+ { 
+	int key =hash(value); 
+	int flag=0,j;
+ 	if(arr[key] == value)
+ 	{
+ 		flag=1;
+ 	}
+ 	else 
+	{ 
+		for(j=key+1;j<10;j++) 
+		{ 
+			if(arr[j]==value)
+ 			{ 
+				flag=1;
+ 				break;
+ 			} 
+		} 
+		for(j=0;j<key&&flag==0;j++)
+ 		{
+ 			if(arr[j]==value) 
+			{
+				 flag=1; 
+				break;
+			 }
+ 		} 
+	}
+ 	if(flag==1)
+ 	{ 
+		printf("Element %d Found\n",value); 
+	} 
+	else 
+	{ 
+		printf("Element %d not Found\n",value);
+	}
+} 
+void display(int arr[10]) 
+{
+ 	int i;
+ 	printf("displaying those elements\n"); 
+	for(i = 0; i < 10; i++)
+ 	printf("arr[%d] = %d\n",i,arr[i]);
+} 
+void main()
+ {
+ 	int ch,size,arr[10],value,key;
+ 	for(key=0;key<10;key++) 
+	{
+		 arr[key]=-1;
+ 	} 
+	while(1)
+ 	{ 
+		printf("\n1.Insert\n2.Search\n3.Delete\n4.Display\n5.Exit\n");
+ 		printf("Enter choice\n");
+ 		scanf("%d",&ch); 
+		switch(ch) 
+		{
+ 			case 1:printf("Enter the element to insert:");
+ 				scanf("%d",&value); 
+				insert(arr,value); 
+				break;
+ 			case 2:printf("Enter the element to search: "); 
+				scanf("%d",&value); 
+				search(arr,value);
+				 break; 
+			case 3:printf("Enter the element to delete: "); 
+				scanf("%d",&value); 
+				del(arr,value);
+ 				break;
+ 			case 4:display(arr);
+				 break; 
+			case 5:exit(0);
+ 				break;
+
+    		}
+	}
+}
